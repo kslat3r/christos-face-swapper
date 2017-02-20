@@ -1,0 +1,32 @@
+{
+  "name": "christos-face-swapper",
+  "version": "1.0.0",
+  "description": "Swap any faces in an image with Christos's face!",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node --harmony server/",
+    "start-dev": "NODE_ENV=development nodemon --exec \"node --harmony server/\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/newlinelabs/christos-face-swapper.git"
+  },
+  "author": "Ed Kelly",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/newlinelabs/christos-face-swapper#readme",
+  "dependencies": {
+    "async-file": "^2.0.2",
+    "bluebird": "^3.4.7",
+    "koa": "^2.0.0-alpha.8",
+    "koa-adapter": "0.0.3",
+    "koa-body": "^2.0.0",
+    "koa-bodyparser": "^3.2.0",
+    "koa-handlebars": "^2.0.0",
+    "koa-router": "^7.0.1",
+    "mongoose": "^4.8.4",
+    "nconf": "^0.8.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
