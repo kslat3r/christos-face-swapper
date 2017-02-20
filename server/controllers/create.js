@@ -13,8 +13,6 @@ module.exports = {
   },
 
   post: async (ctx, next) => {
-    let error;
-
     // do we have an upload?
 
     if (!ctx.request.body.files || !ctx.request.body.files.image) {
