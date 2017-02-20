@@ -14,15 +14,12 @@ module.exports = async (face, buffer, mimeType) => {
   const width = face.getWidth() + enlargeAmount;
   const height = face.getHeight() + enlargeAmount;
 
-  const overlay = await new jimp(width, height, 0xFF0000FF);
-
   // resize christos
 
   christos.contain(width, height);
 
   // add to image
 
-  // image.composite(overlay, x, y);
   image.composite(christos, x, y);
 
   // return buffer

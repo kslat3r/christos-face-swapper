@@ -1,5 +1,6 @@
 const getFaces = require('./getFaces');
-const overlayChristos = require('./overlayChristos');
+const overlayChristosOnFace = require('./overlayChristosOnFace');
+const overlayChristosOnEdge = require('./overlayChristosOnEdge');
 
 module.exports = async (buffer, mimeType) => {
   const faces = await getFaces(buffer);
@@ -8,8 +9,12 @@ module.exports = async (buffer, mimeType) => {
     return Promise.reject('Could not open %s');
   }
 
-  for (let i in faces) {
-    buffer = await overlayChristos(faces[i], buffer, mimeType);
+  if (faces.length) {
+    for (let i in faces) {
+      buffer = await overlayChristosOnFace(faces[i], buffer, mimeType);
+    }
+  } else {
+    buffer = await overlayChristosOnEdge(buffer, mimeType);
   }
 
   return Promise.resolve(buffer);
