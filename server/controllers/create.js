@@ -1,6 +1,6 @@
 const fs = require('async-file');
-const mongoose = require('mongoose');
-const FaceSwap = mongoose.model('FaceSwap');
+const uuid = require('uuid');
+const uploader = require('../lib/uploader');
 
 module.exports = {
   get: async (ctx, next) => {
@@ -8,7 +8,7 @@ module.exports = {
       title: 'Create a Christos faceswap'
     });
 
-    await next;
+    await next();
   },
 
   post: async (ctx, next) => {
@@ -16,35 +16,47 @@ module.exports = {
 
     // do we have an upload?
 
-    if (ctx.request.body.files && ctx.request.body.files.image) {
-      // read file into memory
-
-      const file = ctx.request.body.files.image;
-      const filePath = file.path;
-      const fileMimeType = file.type;
-      const fileContents = await fs.readFile(filePath);
-
-      // delete file
-
-      await fs.unlink(filePath);
-    } else {
-      error = 'Missing image upload';
+    if (!ctx.request.body.files || !ctx.request.body.files.image) {
+      ctx.throw(500, 'Expected file upload');
     }
 
-    // show error page or redirect to faceswap
+    // read file into memory
 
-    if (error) {
-      await ctx.render('create', {
-        title: 'Create a Christos faceswap',
-        flashMessages: [{
-          type: 'danger',
-          message: error,
-        }],
-      });
-    } else {
-      await ctx.redirect(`/faceswap/${NewFaceSwap._id}`);
+    const file = ctx.request.body.files.image;
+    const path = file.path;
+    const mimeType = file.type;
+    const data = await fs.readFile(path);
+
+    const uniqId = uuid.v4();
+    const extension = file.name.split('.')[1];
+    const fileName = `${uniqId}.${extension}`;
+
+    // add christos's face
+
+    try {
+      data = await swapper(data);
+    } catch (e) {
+      ctx.throw(500, e.message, { exception: e });
     }
 
-    await next;
+    // create upload
+
+    let url;
+
+    try {
+      url = await uploader().create(data, fileName, mimeType);
+    } catch (e) {
+      ctx.throw(500, e.message, { exception: e });
+    }
+
+    // delete file
+
+    await fs.unlink(path);
+
+    // redirect
+
+    ctx.redirect(url);
+
+    await next();
   },
 };

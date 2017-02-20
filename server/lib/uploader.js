@@ -1,12 +1,12 @@
 'use strict';
 
-const config = require('./config');
+const config = require('nconf');
 const knox = require('knox');
 const Promise = require('bluebird');
 
 let instance;
 
-module.exports = (Domain) => {
+module.exports = () => {
   instance = knox.createClient({
     key: config.get('s3AccessKeyId'),
     secret: config.get('s3SecretAccessKey'),
@@ -15,30 +15,23 @@ module.exports = (Domain) => {
   });
 
   return {
-    create: async (localFilePath, localFileContentType, remoteFilePath) => {
+    create: async (data, name, mimeType) => {
       return new Promise((resolve, reject) => {
-        instance.putFile(localFilePath, remoteFilePath, {
+        const req = instance.put(name, {
           'x-amz-acl': 'public-read',
-          'Content-Type': localFileContentType,
-        }, (err, res) => {
-          if (err) {
-            return reject(err);
+          'Content-Length': Buffer.byteLength(data),
+          'Content-Type': mimeType,
+        });
+
+        req.on('response', (res) => {
+          if (res.statusCode === 200) {
+            return resolve(req.url);
           }
 
-          return resolve(res);
+          return reject(res);
         });
-      });
-    },
 
-    delete: async (remoteFilePath) => {
-      return new Promise((resolve, reject) => {
-        instance.deleteFile(remoteFilePath, (err, res) => {
-          if (err) {
-            return reject(err);
-          }
-
-          return resolve(res);
-        });
+        req.end(data);
       });
     },
   };

@@ -8,7 +8,6 @@ const error = require('./lib/error');
 // lib
 
 require('./lib/config');
-require('./lib/mongoose');
 
 // server
 
@@ -30,18 +29,13 @@ app.use(handlebars({
   partialsDir: `${__dirname}/views/partials`,
 }));
 
-// models
-
-require('./models/faceSwap');
 
 // routes
 
 const createController = require('./controllers/create');
-const viewController = require('./controllers/view');
 
 router.get('/', createController.get);
 router.post('/', createController.post);
-router.get('/faceswap/:id', viewController.get);
 
 app.use(router.routes());
 app.use(error);
