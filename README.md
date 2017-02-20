@@ -2,12 +2,12 @@
 
 ## Instructions (OSX)
 
-* brew tap homebrew/science
-* brew install open-cv
-* nvm use v7.5.0
-* npm install
-* npm install -g nodemon
-* npm run start-dev
+* `brew tap homebrew/science`
+* `brew install open-cv`
+* `nvm use v7.5.0`
+* `npm install`
+* `npm install -g nodemon`
+* `npm run start-dev`
 
 ## Config
 
