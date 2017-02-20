@@ -1,6 +1,7 @@
 const fs = require('async-file');
 const uuid = require('uuid');
 const uploader = require('../lib/uploader');
+const swapper = require('../lib/swapper');
 
 module.exports = {
   get: async (ctx, next) => {
@@ -25,7 +26,7 @@ module.exports = {
     const file = ctx.request.body.files.image;
     const path = file.path;
     const mimeType = file.type;
-    const data = await fs.readFile(path);
+    let data = await fs.readFile(path);
 
     const uniqId = uuid.v4();
     const extension = file.name.split('.')[1];
@@ -34,7 +35,7 @@ module.exports = {
     // add christos's face
 
     try {
-      data = await swapper(data);
+      data = await swapper(data, mimeType);
     } catch (e) {
       ctx.throw(500, e.message, { exception: e });
     }

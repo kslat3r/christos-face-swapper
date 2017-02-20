@@ -29,7 +29,6 @@ app.use(handlebars({
   partialsDir: `${__dirname}/views/partials`,
 }));
 
-
 // routes
 
 const createController = require('./controllers/create');
