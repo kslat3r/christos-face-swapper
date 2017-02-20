@@ -1,6 +1,9 @@
 {
   "name": "christos-face-swapper",
   "version": "1.0.0",
+  "engines": {
+    "node": "7.5.0"
+  },
   "description": "Swap any faces in an image with Christos's face!",
   "main": "server/index.js",
   "scripts": {
