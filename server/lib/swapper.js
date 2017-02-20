@@ -6,7 +6,7 @@ module.exports = async (buffer, mimeType) => {
   const faces = await getFaces(buffer);
 
   if (!faces) {
-    return Promise.reject('Could not open %s');
+    return Promise.reject('Could not open buffer');
   }
 
   if (faces.length) {
