@@ -48,4 +48,6 @@ app.use(error);
 
 // let's go!
 
-app.listen(process.env.PORT || 3000, () => console.log('server started 3000'));
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => console.log(`server started ${port}`));
