@@ -11,30 +11,9 @@
 
 ## Config
 
-###For local development
+###Environment variables
 
-* Create file `server/config/development.json`
-* Populate it with the following keys:
-
-```
-{
-  "s3AccessKeyId": "",
-  "s3SecretAccessKey": "",
-  "s3BucketName": "",
-  "s3Region": ""
-}
-```
-
-###For production
-
-* Create file `server/config/production.json`
-* Populate it with the following keys:
-
-```
-{
-  "s3AccessKeyId": "",
-  "s3SecretAccessKey": "",
-  "s3BucketName": "",
-  "s3Region": ""
-}
-```
+* `S3_ACCESS_KEY_ID`
+* `S3_SECRET_ACCESS_KEY`
+* `S3_BUCKET_NAME`
+* `S3_REGION`

@@ -26,3 +26,4 @@ node_modules
 
 server/config/development.json
 server/config/production.json
+.env

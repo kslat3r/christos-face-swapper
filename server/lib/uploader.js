@@ -8,10 +8,10 @@ let instance;
 
 module.exports = () => {
   instance = knox.createClient({
-    key: config.get('s3AccessKeyId'),
-    secret: config.get('s3SecretAccessKey'),
-    bucket: config.get('s3BucketName'),
-    region: config.get('s3Region'),
+    key: config.get('S3_ACCESS_KEY_ID'),
+    secret: config.get('S3_SECRET_ACCESS_KEY'),
+    bucket: config.get('S3_BUCKET_NAME'),
+    region: config.get('S3_REGION'),
   });
 
   return {
